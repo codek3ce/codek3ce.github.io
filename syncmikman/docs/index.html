@@ -1,0 +1,158 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="description" content="">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Documentation Mikman</title>
+<link rel="alternate" type="application/rss+xml" title="frittt.com" href="feed/index.html">
+<link href="http://fonts.googleapis.com/css?family=Raleway:700,300" rel="stylesheet"
+        type="text/css">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/prettify.css">
+</head>
+<body>
+<div class="wrapper">
+<header>
+  <div class="container">
+    <h2 class="lone-header">How To Setup Syncmikman</h2>
+  </div>
+</header>
+<section>
+  <div class="container">
+    <ul class="docs-nav">
+      <li><strong>Getting Started</strong></li>
+	  <li><a href="#requiredment" class="cc-active">Requiredment</a></li>
+      <li><a href="#installation" class="cc-active">Installation</a></li>
+      <li><a href="#database" class="cc-active">Database</a></li>
+      <li><a href="#setting_syncmikman" class="cc-active">Setting Syncmikman</a></li>
+      <li><a href="#setting_social" class="cc-active">Setting Social Login</a></li>
+	  <li class="separator"></li>
+	  <li><strong>Create Oauth Apps</strong></li>
+	  <li><a href="#create_facebook_app" class="cc-active">Facebook oAuth</a></li>
+      <li><a href="#create_twitter_oauth" class="cc-active">Twitter oAuth</a></li>
+      <li><a href="#create_google_oauth" class="cc-active">Google oAuth</a></li>
+    </ul>
+    <div class="docs-content">
+	  <h3 id="requiredment"> System Requiredment</h3>
+      <ul>
+        <li>Mikrotik RouterOS v6.x.x.</li>
+		<li>Mikrotik can be accessed from outside the network if using webhosting or cloudhosting.</li>
+		<li>Web Server minimum Php v5.4.x.</li>
+		<li>Web Server Support mail sending.</li>
+	  </ul>
+	  <h3 id="installation"> Uploading via FTP to Web Server</h3>
+      <ul>
+        <li>
+        Download the zipped syncmikman to your local computer from shop.codekece.com and extract the ZIP file contents to a folder on your local computer.</li>
+        <li>In the extracted folder you will find 'syncmikman' Extract this file .</li>
+        <li>
+        Using an FTP client to access your host web server.</li>
+        <li>
+        Upload the files in the folder /var/www or create new folder in /var/www/subdomain folder web server.</li>
+        <li>
+        Or Upload the files in the folder public_html or create new folder in /public_html/subdomain folder web server.</li>
+      </ul>
+      <h3 id="database"> Import Database to phpMyadmin</h3>
+      <ul>
+        <li>Open phpMyadmin your server and create new database with name sync_mikman.</li>
+        <li>Open database sync_mikman and go to import menu.</li>
+        <li>Browse the database 'sync_mikman.sql'in folder syncmikman local computer, and klik go.</li>
+		<li>After finish inport open table user_mikman in database and change ip_mik, port_mik, username_mik, password_mik 
+according to your router.</li>
+      </ul>
+      <h3 id="setting_syncmikman"> Setting Sycmikman</h3>
+      <ul>
+		<li>Open file config.php in folder inc and change .</li>
+		<pre class="prettyprint">
+		
+ $my_user = 'your_user_databse';	// DB USER
+ $my_password = 'your_password_database';	// DB PASSWORD
+ $my_db = 'your_datanase_name';	// DB NAME
+		</pre>
+        <li>Open Sycmikman in browser, default username and password to login in system is admin / admin.</li>
+        <li>Open setting menu, enter Dns Name Hotspot Mikrotik is url login hotspot mikrotik or gateway hotspot mikrotik,(open mikrotik via winbox go to menu ip->hotspot->server profile->general).</li>
+	  </ul>
+	  <h3 id="setting_social"> Setting Social Login</h3>
+	  <ul>
+		<li>Seeting socila page login, open menu social -> setting.</li>
+        <li>IP ADDRESS is ip public or ip address or ddns name your mikrotik.</li>
+        <li>PORT is port API your mikrotik.</li>
+        <li>USERNAME is enter username login your mikrotik.</li>
+		<li>PASSWORD is enter password login your mikrotik.</li>
+		<li>HOTSPOT PROFILE is user profile settings such as speed limit, uptime etc. (open mikrotik via winbox go to menu ip->hotspot->user profile).</li>
+		<li>DNS NAME is url login hotspot mikrotik or gateway hotspot mikrotik,(open mikrotik via winbox go to menu ip->hotspot->server profile->general).</li>
+		<li>LOGIN PAGE URL is url login syncmikman example http://syncmikman.codekece.id</li>
+        <li>Setting login with facebook, Enter FACEBOOK APP ID and FACEBOOK APP SECRET KEY to get code follow <a href="#create_facebook_app">this steap</a>.</li>
+        <li>Setting login with twitter, Enter TWITTER CONSUMER KEY and WITTER CONSUMER SECRET to get code follow <a href="#create_twitter_oauth">this steap</a>.</li>
+        <li>Setting login with google, EnterGOOGLE CLIENT ID, GOOGLE CLIENT SECRET and GOOGLE HOME URL to get code follow <a href="#create_google_oauth">this steap</a>.</li>
+		<li>To Setting login social facebook, twitter, and google 
+first of all add walled garden each social media to mikrotik by running the following command in the terminal through winbox.</li>
+		<pre class="prettyprint">
+		
+ /ip hotspot walled-garden
+ add dst-host=*facebook.com
+ add dst-host=*facebook.net
+ add dst-host=*akamaihd.net
+ add dst-host=*fbcdn.net
+ add dst-host=*google.com
+ add dst-host=*googleapis.com
+ add dst-host=*gstatic.com
+ add dst-host=*googleusercontent.com
+ add dst-host=*google.co.id
+ add dst-host=*googleapis.co.id
+ add dst-host=*gstatic.co.id
+ add dst-host=*googleusercontent.co.id
+ add dst-host=*twitter.com
+ add dst-host=*twimg.com
+ add dst-host=*abs.twitter.com
+ add dst-host=your_domain_syncmikman
+		</pre>
+		<li>Open file login.htm in hotspot folder in zipped syncmikman in local pc, edit url syncmikman.codekece.com with your domain syncmikman.</li>
+		<li>Open winbox, go to menu files, drag and drop folder hotspot (in folder syncmikman your local pc) to winbox.</li>
+	  </ul>
+	  <hr/>
+	  <h3 id="create_facebook_app"> Facebook oAuth</h3>
+      <ul>
+        <li>Go to facebook <a href="//developers.facebook.com" target="_blank">Developers</a>.</li>
+		<li>Press the button will pop up a list of my apps and the apps menu, select add a new app. <br/> <img src="screenshot/facebook/1.png" /></li>
+		<li>You will see a pop up that contains a form for the identity of your app, input name app, email app, chose category and press button Create App ID. <br/> <img src="screenshot/facebook/2.png" /></li>
+		<li>Go to menu Setting -> Basic and press button Add flatform. <br/> <img src="screenshot/facebook/3.png" /></li>
+		<li>You will see a pop up menu and chose website. <br/> <img src="screenshot/facebook/4.png" /></li>
+		<li>Enter url your syncmikman login and press button save changes in buttom screen, example http://syncmikman.codekece.id/login <br/> <img src="screenshot/facebook/5.png" /></li>
+		<li>Go to menu App Review and change Make yourapp public ? from No to Yes <br/> <img src="screenshot/facebook/6.png" /></li>
+		<li>And the latter went to the dashboard menu, here you will find the app id and secret key in hidden press show to see the secret key. </br/> <img src="screenshot/facebook/7.png" /></li>
+      </ul>
+	  <h3 id="create_twitter_oauth"> Twitter oAuth</h3>
+      <ul>
+		<li>Login in twitter and go to link <a href="https://apps.twitter.com">https://apps.twitter.com</a>, and press button 
+Create New App</li>
+		<li>You will be directed to create apps page, fill out all the forms and customize to your data as in the example image below and press Create your Twitter application. <br/> <img src="screenshot/twitter/2.png" /></li>
+		<li>And you can directed to Application Management page press tab Keys and Access Tokens you will find TWITTER CONSUMER KEY and TWITTER CONSUMER SECRET. <br/> <img src="screenshot/twitter/3.png" /></li>
+	  </ul>
+	  <h3 id="create_google_oauth"> Google oAuth</h3>
+      <ul>
+		<li>Go to the <a href="https://console.developers.google.com/" target="_blank">Google Developers Console</a></li><li>Select an existing project, or create a new project by clicking <b>Create Project</b>:<ul class="bullet_disk_list"><li>In the <b>Project name</b> field, type in a name for your new project.</li><li>In the <b>Project ID</b> field, the console has created project ID. Optionally you can type in a project ID for your project. But project ID must be unique worldwide.</li><li>Click on the <b>Create</b> button and the project to be created in some seconds. Once the project is created successfully, the project name would be appearing at the top of the left sidebar.</li></ul></li><li>In the left sidebar, select APIs under the <b>APIs &amp; auth</b> section. A list of Google APIs appears.</li><li>Find the <b>Google+ API</b> service and set its status to <b>Enable</b>.</li><li>In the sidebar, select <b>Credentials</b> under the <b>APIs &amp; auth</b> section.</li><li>In the <b>OAuth</b> section of the page, select <b>Create New Client ID</b>.</li><ul class="bullet_disk_list"><li>Create Client ID dialog box would be appearing for choosing application type.</li><li>In the <b>Application type</b> section of the dialog, select <b>Web application</b> and click on the <b>Configure consent screen</b> button.</li><li>Choose <b>Email address</b>, enter the <b>Product name</b> and save the form.</li><li>In the <b>Authorized JavaScript origins</b> field, enter your app origin. If you want to allow your app to run on different protocols, domains, or subdomains, then you can enter multiple origins.</li><li>In the <b>Authorized redirect URI</b> field, enter the redirect URL.</li><li>Click on <b>Create Client ID</b>.</li></ul><li>The Client ID for web application will be generated. Note the <b>Client ID</b> and <b>Client secret</b> for later use that will need to use to access the APIs.<div class="img_center"><img src="https://i2.wp.com/www.codexworld.com/wp-content/uploads/2014/09/google-project-creation-client-id-for-web-application-by-codexworld.png?resize=668%2C227" alt="google-project-creation-client-id-for-web-application-by-codexworld" class="alignnone size-full wp-image-512" srcset="https://i2.wp.com/www.codexworld.com/wp-content/uploads/2014/09/google-project-creation-client-id-for-web-application-by-codexworld.png?w=668 668w, https://i2.wp.com/www.codexworld.com/wp-content/uploads/2014/09/google-project-creation-client-id-for-web-application-by-codexworld.png?resize=300%2C102 300w, https://i2.wp.com/www.codexworld.com/wp-content/uploads/2014/09/google-project-creation-client-id-for-web-application-by-codexworld.png?resize=200%2C68 200w" sizes="(max-width: 668px) 100vw, 668px" width="668" height="227"></div></li>
+	  </ul>
+    </div>
+  </div>
+</section>
+<section class="vibrant centered">
+  <div class="">
+    <h4> This documentation template is provided by <a href="http://www.frittt.com" target="_blank">Frittt Templates</a>. You can download and use this template for free. If you have used this template, please pay the developer's effort by Tweeting, sharing on Facebook, social mention or with a linkback. Enjoy! :)</h4>
+  </div>
+</section>
+<footer>
+  <div class="">
+    <p> &copy; Copyright Frittt Templates. All Rights Reserved.</p>
+  </div>
+</footer>
+</div>
+<script src="js/jquery.min.js"></script> 
+<script type="text/javascript" src="js/prettify/prettify.js"></script> 
+<script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js?lang=css&skin=sunburst"></script>
+<script src="js/layout.js"></script>
+</body>
+</html>
